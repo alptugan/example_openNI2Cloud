@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<parameters>
+	<Near_Threshold>4</Near_Threshold>
+	<Far_Threshold>0</Far_Threshold>
+	<Enable_OpenCV_Threshold>1</Enable_OpenCV_Threshold>
+	<Draw_Point_Cloud>0</Draw_Point_Cloud>
+	<Near_Cloud_Threshold>0</Near_Cloud_Threshold>
+	<Far_Cloud_Threshold>1700</Far_Cloud_Threshold>
+</parameters>
