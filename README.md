@@ -1,6 +1,6 @@
 # example_openNI2Cloud
- needs my fork of ofxNI2. Link is in the README file
-
+ needs my fork of -> [ofxNI2](https://github.com/alptugan/ofxNI2)
+ 
  Working Setup;
 - OS : High Sierra 10.13.6
 - oF : v.0.11
