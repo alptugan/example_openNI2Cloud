@@ -44,7 +44,7 @@ class ofApp : public ofBaseApp{
     ofxNI2::Device device;
     ofxNI2::IrStream ir;
     ofxNI2::Grayscale gray;
-    //ofxNI2::ColorStream colorStream;
+    ofxNI2::ColorStream colorStream;
     ofxNI2::DepthStream depth;
     
     ofFbo depthFbo;
@@ -74,6 +74,8 @@ class ofApp : public ofBaseApp{
     ofParameter<int> nearThresHoldDepth;
     ofParameter<int> farThresHoldDepth;
     ofParameter<int> pointSize;
+    ofParameter<int> stepSize;
+    ofParameter<glm::vec2> distThres;
     
     ofxLabel fps;
     
@@ -84,5 +86,8 @@ class ofApp : public ofBaseApp{
     
     // draw pointcloud
     void drawPointCloud();
+    
+    // Mesh connection lines
+    ofMesh lines;
 
 };

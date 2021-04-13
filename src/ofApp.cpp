@@ -10,7 +10,7 @@ void ofApp::setup(){
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
     
-    ofSetWindowShape(w*3, h*3);
+    ofSetWindowShape(1080, 1080);
     
     ofBackground(0);
     
@@ -57,7 +57,9 @@ void ofApp::setup(){
     gui.add(farThreshold.set("Far Threshold", 70, 0, 255));
     gui.add(bThreshWithOpenCV.set("Enable OpenCV Threshold", true));
     gui.add(bDrawPointCloud.set("Draw Point Cloud", false));
+    gui.add(stepSize.set("Point Cloud Resolution", 1, 1, 10));
     gui.add(pointSize.set("Set Point Size", 3, 0, 30));
+    gui.add(distThres.set("Line Threshold", glm::vec2(1550, 1551), glm::vec2(0), glm::vec2(2000)));
     gui.add(nearThresHoldDepth.set("Near Cloud Threshold", 0, 0, 1000));
     gui.add(farThresHoldDepth.set("Far Cloud Threshold", 0, 0, 20000));
     gui.add(fps.setup("FPS",""));
@@ -70,6 +72,10 @@ void ofApp::setup(){
         colorStream.setFps(60);
         colorStream.start();
      }*/
+    
+    
+    // Lines
+    lines.setMode(ofPrimitiveMode::OF_PRIMITIVE_LINES);
 }
 
 
@@ -173,13 +179,13 @@ void ofApp::drawPointCloud() {
     int h = depth.getHeight();
     ofMesh mesh;
     mesh.setMode(OF_PRIMITIVE_POINTS);
-    ofPixels px = depth.getPixelsRef(1000, 4000);
-    int step = 2;
-    for(int y = 0; y < h; y += step) {
-        for(int x = 0; x < w; x += step) {
+    ofPixels px = depth.getPixelsRef(nearThresHoldDepth, farThresHoldDepth, true);
+
+    for(int y = 0; y < h; y += stepSize) {
+        for(int x = 0; x < w; x += stepSize) {
             if(depth.getWorldCoordinateAt(x, y).z > nearThresHoldDepth && depth.getWorldCoordinateAt(x, y).z < farThresHoldDepth) {
-               
-                mesh.addColor(ofColor(255) - px.getColor(x, y));
+                float mono = px.getColor(x, y).getBrightness();
+                mesh.addColor(ofColor(mono));
                 //ofColorr dd = depth.getPixelsRef().getColor(x, y).getNormalized();
                 //ofLog() << dd;
                 mesh.addVertex(depth.getWorldCoordinateAt(x, y));
@@ -193,6 +199,37 @@ void ofApp::drawPointCloud() {
     ofTranslate(0, 0, -1000); // center the points a bit
     ofEnableDepthTest();
     mesh.drawVertices();
+    
+    
+    lines.clear();
+    //ofSetLineWidth(2);
+    
+    
+    vector<glm::vec3> & meshVert = mesh.getVertices();
+    
+    for (int i = 0; i < meshVert.size(); i = i + 10) {
+        for (int j = i + 10; j < meshVert.size(); j = j + 10) {
+            
+            if(j % 50 == 0) {
+                float dst = glm::distance(meshVert[i], meshVert[j]);
+            
+                //if(randDice > 0.1)
+                //{
+                if(dst > distThres->x && dst <  distThres->y) {
+                    //ofDrawLine(particles[i].getPos().x, particles[i].getPos().y, particles[j].getPos().x, particles[j].getPos().y);
+                    float alpha = ofMap(dst, distThres->x,  distThres->y, 150, 0, true);
+                    lines.addColor(ofColor(255,255, 255, alpha));
+                    lines.addVertex(glm::vec3(meshVert[i].x, meshVert[i].y, meshVert[i].z));
+                    lines.addColor(ofColor(255,255, 255, alpha));
+                    lines.addVertex(glm::vec3(meshVert[j].x, meshVert[j].y, meshVert[j].z));
+                }
+            }
+            //}
+        }
+    }
+    
+    lines.draw();
+    
     ofDisableDepthTest();
     ofPopMatrix();
 }

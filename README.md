@@ -8,13 +8,16 @@
 
 Fixed the addon for ASUS Xtion Sensor to run with oF v.0.11.0. Cannot make run the example-assimp-model & example-user-tracker projects.
 
-**Cannot make it run with Kinect v.01!
-**
+** Cannot make it run with Kinect v.01! **
 
 ![alt](ofxNI2_cover.png)
 
 Cloud view screen shot
 ![alt](ofxNI2_cover2.png)
+
+** Example project ** 
+![alt](ofxNI2_cover3.jpg)
+![alt](ofxNI2_cover4.jpg)
 
 OSX
 --------

@@ -1,9 +1,12 @@
 <?xml version="1.0"?>
 <parameters>
 	<Near_Threshold>4</Near_Threshold>
-	<Far_Threshold>0</Far_Threshold>
+	<Far_Threshold>2</Far_Threshold>
 	<Enable_OpenCV_Threshold>1</Enable_OpenCV_Threshold>
-	<Draw_Point_Cloud>0</Draw_Point_Cloud>
-	<Near_Cloud_Threshold>0</Near_Cloud_Threshold>
-	<Far_Cloud_Threshold>1700</Far_Cloud_Threshold>
+	<Draw_Point_Cloud>1</Draw_Point_Cloud>
+	<Near_Cloud_Threshold>427</Near_Cloud_Threshold>
+	<Far_Cloud_Threshold>1287</Far_Cloud_Threshold>
+	<Set_Point_Size>0</Set_Point_Size>
+	<Point_Cloud_Resolution>1</Point_Cloud_Resolution>
+	<Line_Threshold>40.8163, 72.9592</Line_Threshold>
 </parameters>
